@@ -5,6 +5,7 @@ public class CheckOtpRequest {
 	private String bt;
 	private String transactionId;
 	private String profile;
+	private String otp;
 	
 	public String getBt() {
 		return bt;
@@ -23,6 +24,12 @@ public class CheckOtpRequest {
 	}
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 	
 	

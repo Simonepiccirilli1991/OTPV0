@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.otpv0.service.model.request.OtpCacheRequest;
 import com.otpv0.service.model.response.BaseCacheResponse;
+import com.otpv0.service.model.response.CheckOtpCacheResponse;
 
 import reactor.core.publisher.Mono;
 
@@ -41,4 +42,33 @@ public class Cach0Client {
 		
 		return iResp;
 	}
+	
+	
+	//getCacheOtp
+	public CheckOtpCacheResponse getOtpCache(String trxId) {
+		
+		CheckOtpCacheResponse response = new CheckOtpCacheResponse();
+		Mono<CheckOtpCacheResponse> iResp = null;
+		
+		try {
+			iResp = webClient.post()
+					.uri("otp/get")
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+					.body(Mono.just(trxId), String.class)
+					.retrieve()
+					.bodyToMono(CheckOtpCacheResponse.class);
+		}
+		catch(Exception e) {
+			
+			response.setMsg(e.getMessage());
+			response.setIsPresent(false);
+			return response;
+		}
+		response = iResp.block();
+		
+		
+		return response;
+	}
+	
 }
