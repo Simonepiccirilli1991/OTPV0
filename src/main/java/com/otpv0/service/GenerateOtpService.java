@@ -45,7 +45,11 @@ public class GenerateOtpService {
 		otpService.generaESalva(transactionId.getChiaveId(), request.getBt(), transactionId.getTimeStamp(), request.getProf(), transactionId.getTimestampDate(), otp);
 		// invia otp via mail
 		generate.invia(otp, request.getEmail());	
-
+		
+		response.setTrxId(transactionId.getChiaveId());
+		response.setOtpSend(true);
+		response.setMsg("otp sended");
+		
 		return response;
 	}
 }

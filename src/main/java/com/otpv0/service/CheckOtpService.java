@@ -1,5 +1,7 @@
 package com.otpv0.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,12 @@ public class CheckOtpService {
 			response.setMsg("Error");
 			response.setAutenticationSucc(false);
 			return response;
+		}
+		// controllo se otp è ancora valido
+		if(cacheDto.getTimestampDate().plusMinutes(1).isAfter(LocalDateTime.now())) {
+			response.setAutenticationSucc(false);
+			response.setMsg("OtpScaduto");
+			response.setMsg("Error");
 		}
 		
 		// checko otp
