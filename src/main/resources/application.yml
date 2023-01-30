@@ -1,6 +1,9 @@
 server:
- port: 8088
+ port: 8087
 
+config:
+  cach0:
+    end-point: ${CACH0_ENDPOINT:http://localhost:8082}
 
 spring:
  mail:

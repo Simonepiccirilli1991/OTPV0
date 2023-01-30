@@ -34,7 +34,7 @@ public class GenerateOtpService {
 
 	// genera e gestisce transactionId internamente , no imput
 	public GenerateOtpResponse generateOtpNoTransaction(GenerateOtpRequest request, HttpHeaders header) {
-		logger.info("");
+		logger.info("API :generateOtpNoTransaction - START");
 		GenerateOtpResponse response = new GenerateOtpResponse();
 
 		// genero TransactionId
@@ -49,6 +49,31 @@ public class GenerateOtpService {
 		response.setTrxId(transactionId.getChiaveId());
 		response.setOtpSend(true);
 		response.setMsg("otp sended");
+		
+		logger.info("API :generateOtpNoTransaction - END");
+		
+		return response;
+	}
+	
+	//Mocked geterateOtp - otp hardcoded for svil e test
+	public GenerateOtpResponse mockOtpGenerate(GenerateOtpRequest request) {
+		
+		logger.info("API: mockOtpGenerate - START");
+		GenerateOtpResponse response = new GenerateOtpResponse();
+
+		// genero TransactionId
+		ChiaveIdResponse transactionId = chiaveId.crea(request.getBt(), request.getAbi(), request.getProf());
+		// otp hardcodato per test
+		String otp = "111111";
+		//salvo in cache con trxId come chiave
+		otpService.generaESalva(transactionId.getChiaveId(), request.getBt(), transactionId.getTimeStamp(), request.getProf(), transactionId.getTimestampDate(), otp);
+		
+		
+		response.setTrxId(transactionId.getChiaveId());
+		response.setOtpSend(true);
+		response.setMsg("otp sended");
+		
+		logger.info("API: mockOtpGenerate - END");
 		
 		return response;
 	}

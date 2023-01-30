@@ -37,6 +37,14 @@ public class OtpControllerV1 {
 		
 		return checkService.checkOtp(request);
 	}
-	//TODO creare cache cach0
-	// dopo tirare su dockerfile
+	
+	// mock service that don't send otp really cause otp is hardcoded for svil e test
+	@PostMapping("mock/generateOtp")
+	public GenerateOtpResponse generateOtpMock(@RequestBody GenerateOtpRequest request, @RequestHeader HttpHeaders header) {
+		
+		return otpService.generateOtpNoTransaction(request, header);
+	}
+
+	
+	
 }

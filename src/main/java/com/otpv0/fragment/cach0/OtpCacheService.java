@@ -18,8 +18,6 @@ public class OtpCacheService {
 	public void generaESalva(String transactionId, String bt, String timestamp, String profilo, LocalDateTime timestampDate,
 			String otp) {
 
-		String prof = getProfilo(profilo);
-
 		// setto dto da passare in cache con le varie info per fare check
 		OtpCacheRequest request = new OtpCacheRequest();
 		request.setBt(bt);
