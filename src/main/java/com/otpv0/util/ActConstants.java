@@ -31,4 +31,14 @@ public class ActConstants {
 		public static final String FIL = "AM";
 	}
 	
+	public static class PushStatus{
+		
+		private PushStatus() {}
+		
+		public static final String PENDING = "pending";
+		public static final String REJECTED = "rejected";
+		public static final String ACEPTED = "acepted";
+		public static final String TIMEOUT = "timeout";
+	}
+	
 }
