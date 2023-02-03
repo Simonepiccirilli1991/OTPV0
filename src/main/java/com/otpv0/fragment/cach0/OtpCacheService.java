@@ -13,7 +13,7 @@ import com.otpv0.util.ActConstants;
 public class OtpCacheService {
 
 	@Autowired
-	Cach0Client cachClient;
+	CachOtpClient cachClient;
 	
 	public void generaESalva(String transactionId, String bt, String timestamp, String profilo, LocalDateTime timestampDate,
 			String otp) {
@@ -28,7 +28,7 @@ public class OtpCacheService {
 		request.setOtp(otp);
 
 		// chiamo cache 
-		BaseCacheResponse cacheDTO = cachClient.insertCache(request);
+		BaseCacheResponse cacheDTO = cachClient.insertOtpCache(request);
 		
 		if(cacheDTO.getInsert() != true) {
 			// TODO lanciare eccezzione, da implementare

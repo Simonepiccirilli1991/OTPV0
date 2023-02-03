@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.otpv0.fragment.cach0.Cach0Client;
+import com.otpv0.fragment.cach0.CachOtpClient;
 import com.otpv0.service.model.request.CheckOtpRequest;
 import com.otpv0.service.model.response.CheckOtpCacheResponse;
 import com.otpv0.service.model.response.CheckOtpResponse;
@@ -15,7 +15,7 @@ public class CheckOtpService {
 
 	
 	@Autowired
-	Cach0Client cacheClient;
+	CachOtpClient cacheClient;
 	
 	
 	public CheckOtpResponse checkOtp(CheckOtpRequest request) {

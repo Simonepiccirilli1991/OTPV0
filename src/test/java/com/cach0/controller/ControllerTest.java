@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.otpv0.Otpv01Application;
-import com.otpv0.fragment.cach0.Cach0Client;
+import com.otpv0.fragment.cach0.CachOtpClient;
 import com.otpv0.service.model.request.CheckOtpRequest;
 import com.otpv0.service.model.request.GenerateOtpRequest;
 import com.otpv0.service.model.request.OtpCacheRequest;
@@ -35,7 +35,7 @@ public class ControllerTest {
 	@Autowired
 	MockMvc mvc;
 	@MockBean
-	Cach0Client cacheClient;
+	CachOtpClient cacheClient;
 	@MockBean
 	JavaMailSender javaMailSender;
 	
@@ -55,7 +55,7 @@ public class ControllerTest {
 		cacheDto.setInsert(true);
 		cacheDto.setMsg("t'appo!");
 		
-		when(cacheClient.insertCache(any(OtpCacheRequest.class))).thenReturn(cacheDto);
+		when(cacheClient.insertOtpCache(any(OtpCacheRequest.class))).thenReturn(cacheDto);
 		
 		String iResp = mvc.perform(post("/v1/generateOtp")
 				.contentType("application/json")

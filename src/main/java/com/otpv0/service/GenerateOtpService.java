@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import com.otpv0.fragment.cach0.Cach0Client;
+import com.otpv0.fragment.cach0.CachOtpClient;
 import com.otpv0.fragment.cach0.OtpCacheService;
 import com.otpv0.fragment.classic.ChiaveIdResponse;
 import com.otpv0.fragment.classic.CreaChiaveId;
@@ -26,7 +26,7 @@ public class GenerateOtpService {
 	@Autowired
 	GeneraEInviaService generate;
 	@Autowired
-	Cach0Client client;
+	CachOtpClient client;
 	@Autowired
 	OtpCacheService otpService;
 

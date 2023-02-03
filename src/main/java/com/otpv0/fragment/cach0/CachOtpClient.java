@@ -13,14 +13,14 @@ import com.otpv0.service.model.response.CheckOtpCacheResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-public class Cach0Client {
+public class CachOtpClient {
 
 	@Value("${config.cach0.end-point}")
 	private String iwdbUri;
 	WebClient webClient = WebClient.create(iwdbUri);
 
 	// inserisco otp in cache
-	public BaseCacheResponse insertCache(OtpCacheRequest request) {
+	public BaseCacheResponse insertOtpCache(OtpCacheRequest request) {
 
 		BaseCacheResponse iResp = new BaseCacheResponse();
 		Mono<BaseCacheResponse> response = null;

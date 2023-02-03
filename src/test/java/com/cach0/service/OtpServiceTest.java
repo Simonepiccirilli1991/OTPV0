@@ -14,7 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.otpv0.Otpv01Application;
-import com.otpv0.fragment.cach0.Cach0Client;
+import com.otpv0.fragment.cach0.CachOtpClient;
 import com.otpv0.service.CheckOtpService;
 import com.otpv0.service.GenerateOtpService;
 import com.otpv0.service.model.request.CheckOtpRequest;
@@ -33,7 +33,7 @@ public class OtpServiceTest {
 	@Autowired
 	GenerateOtpService generateService;
 	@MockBean
-	Cach0Client cacheClient;
+	CachOtpClient cacheClient;
 	@MockBean
 	JavaMailSender javaMailSender;
 	
@@ -52,7 +52,7 @@ public class OtpServiceTest {
 		cacheDto.setInsert(true);
 		cacheDto.setMsg("t'appo!");
 		
-		when(cacheClient.insertCache(any(OtpCacheRequest.class))).thenReturn(cacheDto);
+		when(cacheClient.insertOtpCache(any(OtpCacheRequest.class))).thenReturn(cacheDto);
 		
 		
 		GenerateOtpResponse response = generateService.generateOtpNoTransaction(request, null);
