@@ -1,6 +1,7 @@
 package com.otpv0.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.otpv0.fragment.cach0.PushCacheService;
@@ -10,6 +11,7 @@ import com.otpv0.service.model.response.PushResponse;
 import com.otpv0.util.ActConstants;
 import com.otpv0.util.CommonUtils;
 
+@Service
 public class GetPushService {
 
 	@Autowired

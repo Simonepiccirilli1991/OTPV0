@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
@@ -16,17 +17,26 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.otpv0.Otpv01Application;
 import com.otpv0.fragment.cach0.CachOtpClient;
+import com.otpv0.fragment.cach0.CachPushClient;
+import com.otpv0.service.AceptPushService;
+import com.otpv0.service.GetPushService;
+import com.otpv0.service.SendPushService;
 import com.otpv0.service.model.request.CheckOtpRequest;
 import com.otpv0.service.model.request.GenerateOtpRequest;
 import com.otpv0.service.model.request.OtpCacheRequest;
+import com.otpv0.service.model.request.PushRequest;
 import com.otpv0.service.model.response.BaseCacheResponse;
 import com.otpv0.service.model.response.CheckOtpCacheResponse;
 import com.otpv0.service.model.response.CheckOtpResponse;
 import com.otpv0.service.model.response.GenerateOtpResponse;
+import com.otpv0.service.model.response.PushChResponse;
+import com.otpv0.service.model.response.PushResponse;
+import com.otpv0.util.ActConstants;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = Otpv01Application.class)
@@ -34,6 +44,8 @@ public class ControllerTest {
 
 	@Autowired
 	MockMvc mvc;
+	@MockBean
+	CachPushClient pushClient;
 	@MockBean
 	CachOtpClient cacheClient;
 	@MockBean
@@ -137,5 +149,91 @@ public class ControllerTest {
 		assertThat(response.getMsg()).isEqualTo("Error");
 		assertThat(response.getErrorMsg()).isEqualTo("Otp errato");
 		
+	}
+	
+	//---------- PUSH CONTROLLER TEST ----------------------------------------------------------------//
+	
+	@Test
+	public void sendPushTestOK() throws Exception {
+		
+		PushRequest request = new PushRequest();
+		request.setBancaId("badnaId");
+		request.setBt("bt");
+		
+		BaseCacheResponse cacheResp = new BaseCacheResponse();
+		cacheResp.setMsg("daje");
+		cacheResp.setInsert(true);
+		
+		when(pushClient.insertPushCache(any())).thenReturn(cacheResp);
+		
+		String iResp = mvc.perform(post("/push/send")
+				.contentType("application/json")
+				.content(mapper.writeValueAsString(request)))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		PushResponse response = mapper.readValue(iResp, PushResponse.class);
+		
+		assertThat(response.getSended()).isTrue();
+	}
+	
+	@Test
+	public void acceptPushTestOK() throws Exception{
+		
+		PushRequest request = new PushRequest();
+		request.setBancaId("badnaId");
+		request.setBt("bt");
+		
+		BaseCacheResponse cacheResp = new BaseCacheResponse();
+		cacheResp.setMsg("daje");
+		cacheResp.setInsert(true);
+		
+		PushChResponse chResponse = new PushChResponse();
+		chResponse.setNoFound(false);
+		chResponse.setBandaId("bancaId");
+		chResponse.setBt("bt-1");
+		chResponse.setTime(LocalDateTime.now());
+		chResponse.setStatus(ActConstants.PushStatus.PENDING);
+		
+		when(pushClient.getPushCache(any())).thenReturn(chResponse);
+		
+		when(pushClient.updatePushCache(any())).thenReturn(chResponse);
+		
+		String iResp = mvc.perform(post("/push/confirm")
+				.contentType("application/json")
+				.content(mapper.writeValueAsString(request)))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		PushResponse response = mapper.readValue(iResp, PushResponse.class);
+		
+		assertThat(response.getAcepted()).isTrue();
+		
+	}
+	
+	@Test
+	
+	public void getPushTestOK() throws Exception {
+		
+		PushRequest request = new PushRequest();
+		request.setBancaId("badnaId");
+		request.setBt("bt");
+		
+		PushChResponse chResponse = new PushChResponse();
+		chResponse.setNoFound(false);
+		chResponse.setBandaId("bancaId");
+		chResponse.setBt("bt-1");
+		chResponse.setTime(LocalDateTime.now());
+		chResponse.setStatus(ActConstants.PushStatus.PENDING);
+		
+		when(pushClient.getPushCache(any())).thenReturn(chResponse);
+		
+		String iResp = mvc.perform(post("/push/get")
+				.contentType("application/json")
+				.content(mapper.writeValueAsString(request)))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		PushResponse response = mapper.readValue(iResp, PushResponse.class);
+		
+		assertThat(response.getMsg()).isEqualTo("pending");
+		assertThat(response.getStatus()).isEqualTo(ActConstants.PushStatus.PENDING);
 	}
 }

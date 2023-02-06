@@ -20,7 +20,7 @@ public class CachPushClient {
 	WebClient webClient = WebClient.create(iwdbUri);
 
 	// inserisco push in cache
-	public BaseCacheResponse insertOtpCache(PushDto request) {
+	public BaseCacheResponse insertPushCache(PushDto request) {
 
 		BaseCacheResponse iResp = new BaseCacheResponse();
 		Mono<BaseCacheResponse> response = null;
@@ -47,7 +47,7 @@ public class CachPushClient {
 	}
 	
 	//update push cache
-	public BaseCacheResponse updateOtpCache(PushDto request) {
+	public BaseCacheResponse updatePushCache(PushDto request) {
 
 		BaseCacheResponse iResp = new BaseCacheResponse();
 		Mono<BaseCacheResponse> response = null;
@@ -74,7 +74,7 @@ public class CachPushClient {
 	}
 	
 	//get push cache
-	public PushChResponse getOtpCache(String bt) {
+	public PushChResponse getPushCache(String bt) {
 
 		PushChResponse iResp = new PushChResponse();
 		Mono<PushChResponse> response = null;

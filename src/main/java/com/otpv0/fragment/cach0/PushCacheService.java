@@ -16,7 +16,7 @@ public class PushCacheService {
 	//insert push cache
 	public Boolean insertCachPush(PushDto dto) {
 		
-		BaseCacheResponse cachResp = push.insertOtpCache(dto);
+		BaseCacheResponse cachResp = push.insertPushCache(dto);
 		if(!cachResp.getInsert()) {
 			return false;
 		}
@@ -31,7 +31,7 @@ public class PushCacheService {
 		PushChResponse iResp = null;
 		
 		try {
-			iResp = push.getOtpCache(bt);
+			iResp = push.getPushCache(bt);
 			// ritorno dto del cazzo a nullo , gestico nel service principale e faccio lanciare eccezzione a orchestratore
 			if(iResp.getNoFound())
 				return response;
@@ -48,7 +48,7 @@ public class PushCacheService {
 	//update status cache
 	public void updatePushStatus(PushDto request) {
 		
-		 push.updateOtpCache(request);
+		 push.updatePushCache(request);
 		
 	}
 	
