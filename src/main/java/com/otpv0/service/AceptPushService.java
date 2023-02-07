@@ -1,5 +1,7 @@
 package com.otpv0.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -18,8 +20,14 @@ public class AceptPushService {
 	CommonUtils utils;
 	@Autowired
 	PushCacheService push;
+	
+	Logger logger = LoggerFactory.getLogger(AceptPushService.class);
+	
+	
 	public PushResponse acceptPush(PushRequest request) {
-
+		
+		logger.info("API :acceptPush - START with raw request:"+ request);
+		
 		PushResponse response = new PushResponse();
 		//chiamo la getpush in cache
 		PushDto pushDto = push.getPushDto(request.getBt());
@@ -27,6 +35,7 @@ public class AceptPushService {
 		if(ObjectUtils.isEmpty(pushDto)) {
 			response.setNoFound(true);
 			response.setMsg("Error on retrive status push");
+			logger.info("API :acceptPush - END with response:"+ response.toString());
 			return response;
 		}
 		// se status e pending e push e ancora valida
@@ -35,6 +44,7 @@ public class AceptPushService {
 			pushDto.setStatus(ActConstants.PushStatus.ACEPTED);
 			push.updatePushStatus(pushDto);
 			response.setAcepted(true);
+			logger.info("API :acceptPush - END with response:"+ response.toString());
 			return response;
 			
 		}
@@ -42,6 +52,7 @@ public class AceptPushService {
 			pushDto.setStatus(ActConstants.PushStatus.REJECTED);
 			push.updatePushStatus(pushDto);
 			response.setAcepted(false);
+			logger.info("API :acceptPush - END with response:"+ response.toString());
 			return response;
 		}
 	}

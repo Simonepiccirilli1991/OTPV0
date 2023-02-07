@@ -2,6 +2,8 @@ package com.otpv0.service;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,13 @@ public class SendPushService {
 	@Autowired
 	PushCacheService push;
 	
+	Logger logger = LoggerFactory.getLogger(SendPushService.class);
+	
 	// manda push
 	public PushResponse sendNotifyPush(PushRequest request) {
 
+		logger.info("API :sendNotifyPush - START with raw request:"+ request.toString());
+		
 		PushResponse response = new PushResponse();
 
 		// faccio finta di inviare push
@@ -38,6 +44,8 @@ public class SendPushService {
 		push.insertCachPush(pushDto);
 		
 		response.setSended(true);
+		logger.info("API :sendNotifyPush - END with response:"+ response.toString());
+		
 		return response;
 	}
 

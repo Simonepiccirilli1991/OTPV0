@@ -79,7 +79,7 @@ public class CachPushClient {
 		PushChResponse iResp = new PushChResponse();
 		Mono<PushChResponse> response = null;
 		
-		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/push/get"+bt).toUriString();
+		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/push/get/"+bt).toUriString();
 		
 		try {
 			response = webClient.get()

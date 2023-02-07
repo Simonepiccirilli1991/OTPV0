@@ -2,6 +2,8 @@ package com.otpv0.service;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,11 @@ public class CheckOtpService {
 	
 	@Autowired
 	CachOtpClient cacheClient;
-	
+	Logger logger = LoggerFactory.getLogger(CheckOtpService.class);
 	
 	public CheckOtpResponse checkOtp(CheckOtpRequest request) {
+		
+		logger.info("API :checkOtp - START with raw request:", request);
 		
 		CheckOtpResponse response = new CheckOtpResponse();
 		
@@ -28,6 +32,7 @@ public class CheckOtpService {
 		if(cacheDto.getIsPresent() != true) {
 			response.setMsg("Error");
 			response.setAutenticationSucc(false);
+			logger.info("API :checkOtp - END with response:", response);
 			return response;
 		}
 		// controllo se otp è ancora valido
@@ -59,6 +64,7 @@ public class CheckOtpService {
 			response.setMsg("Error");
 		}
 		
+		logger.info("API :checkOtp - END with response:", response);
 		return response;
 	}
 }
