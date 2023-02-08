@@ -34,5 +34,10 @@ public class PushDto {
 		this.status = status;
 	}
 	
+	@Override
+	public String toString() {
+		return "PushDto [bt=" + bt + ", bandaId=" + bandaId + ", time=" + time + ", status=" + status + "]";
+	}
+	
 	
 }

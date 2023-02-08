@@ -31,6 +31,11 @@ public class CheckOtpRequest {
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
+	@Override
+	public String toString() {
+		return "CheckOtpRequest [bt=" + bt + ", transactionId=" + transactionId + ", profile=" + profile + ", otp="
+				+ otp + "]";
+	}
 	
 	
 }

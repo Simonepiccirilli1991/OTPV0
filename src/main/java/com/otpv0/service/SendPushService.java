@@ -27,7 +27,7 @@ public class SendPushService {
 	// manda push
 	public PushResponse sendNotifyPush(PushRequest request) {
 
-		logger.info("API :sendNotifyPush - START with raw request:"+ request.toString());
+		logger.info("API :sendNotifyPush - START with raw request: {}", request);
 		
 		PushResponse response = new PushResponse();
 
@@ -44,7 +44,7 @@ public class SendPushService {
 		push.insertCachPush(pushDto);
 		
 		response.setSended(true);
-		logger.info("API :sendNotifyPush - END with response:"+ response.toString());
+		logger.info("API :sendNotifyPush - END with response: {}", response);
 		
 		return response;
 	}

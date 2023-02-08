@@ -25,5 +25,11 @@ public class CheckOtpResponse {
 		this.errorMsg = errorMsg;
 	}
 	
+	@Override
+	public String toString() {
+		return "CheckOtpResponse [autenticationSucc=" + autenticationSucc + ", msg=" + msg + ", errorMsg=" + errorMsg
+				+ "]";
+	}
+	
 	
 }

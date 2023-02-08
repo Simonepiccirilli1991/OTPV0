@@ -26,7 +26,7 @@ public class GetPushService {
 	// get push per polling
 	public PushResponse getStatusPush(PushRequest request) {
 
-		logger.info("API :getStatusPush - START with raw request:"+ request.toString());
+		logger.info("API :getStatusPush - START with raw request: {}", request);
 		
 		PushResponse response = new PushResponse();
 		//chiamo la get in cache
@@ -34,7 +34,7 @@ public class GetPushService {
 		if(ObjectUtils.isEmpty(pushDto)) {
 			response.setNoFound(true);
 			response.setMsg("Error on retrive status push");
-			logger.info("API :getStatusPush - END with response:"+ response.toString());
+			logger.info("API :getStatusPush - END with response: {}", response);
 			return response;
 		}
 
@@ -43,7 +43,7 @@ public class GetPushService {
 			response.setAcepted(true);
 			response.setMsg("Push validated");
 			response.setStatus(pushDto.getStatus());
-			logger.info("API :getStatusPush - END with response:"+ response.toString());
+			logger.info("API :getStatusPush - END with response: {}", response);
 			return response;
 		}
 		else if(ActConstants.PushStatus.PENDING.equals(pushDto.getStatus())) {
@@ -55,20 +55,20 @@ public class GetPushService {
 				response.setAcepted(false);
 				response.setStatus(pushDto.getStatus());
 				response.setMsg("timeout");
-				logger.info("API :getStatusPush - END with response:"+ response.toString());
+				logger.info("API :getStatusPush - END with response: {}", response);
 				return response;
 			}
 
 			response.setStatus(pushDto.getStatus());
 			response.setMsg("pending");
-			logger.info("API :getStatusPush - END with response:"+ response.toString());
+			logger.info("API :getStatusPush - END with response: {}", response);
 			return response;
 
 		}
 		else {
 			response.setAcepted(false);
 			response.setStatus(pushDto.getStatus());
-			logger.info("API :getStatusPush - END with response:"+ response.toString());
+			logger.info("API :getStatusPush - END with response: {}", response);
 			return response;
 		}
 	}

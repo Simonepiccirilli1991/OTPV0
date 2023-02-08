@@ -25,5 +25,10 @@ public class BaseCacheResponse {
 		this.noFound = noFound;
 	}
 	
+	@Override
+	public String toString() {
+		return "BaseCacheResponse [msg=" + msg + ", insert=" + insert + ", noFound=" + noFound + "]";
+	}
+	
 	
 }

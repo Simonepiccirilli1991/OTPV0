@@ -18,8 +18,8 @@ import reactor.core.publisher.Mono;
 public class CachOtpClient {
 
 	@Value("${config.cach0.end-point}")
-	private String iwdbUri;
-	WebClient webClient = WebClient.create(iwdbUri);
+	private String cachUri;
+	WebClient webClient = WebClient.create(cachUri);
 	
 	Logger logger = LoggerFactory.getLogger(CachOtpClient.class);
 	
@@ -28,9 +28,9 @@ public class CachOtpClient {
 
 		BaseCacheResponse iResp = new BaseCacheResponse();
 		Mono<BaseCacheResponse> response = null;
-		logger.info("Client :insertOtpCache - START with raw request:"+ request);
+		logger.info("Client :insertOtpCache - START with raw request: {}",  request);
 		
-		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/otp/insert").toUriString();
+		String uri = UriComponentsBuilder.fromHttpUrl(cachUri + "/otp/insert").toUriString();
 		
 		try {
 			response = webClient.post()
@@ -40,17 +40,17 @@ public class CachOtpClient {
 					.body(Mono.just(request), OtpCacheRequest.class)
 					.retrieve()
 					.bodyToMono(BaseCacheResponse.class);
-			logger.info("Client :insertOtpCache - raw response:"+ response);
+			logger.info("Client :insertOtpCache - raw response: {}", response);
 		}
 		catch(Exception e) {
-			logger.info("Client :insertOtpCache - EXCEPTION with :"+ e);
+			logger.error("Client :insertOtpCache - EXCEPTION with :", e);
 			iResp.setMsg(e.getMessage());
 			iResp.setInsert(false);
 			return iResp;
 		}
 		iResp = response.block();
 		
-		logger.info("Client :insertOtpCache - END with response:"+ iResp);
+		logger.info("Client :insertOtpCache - END with response: {}", iResp);
 		return iResp;
 	}
 	
@@ -58,12 +58,12 @@ public class CachOtpClient {
 	//getCacheOtp
 	public CheckOtpCacheResponse getOtpCache(String trxId) {
 		
-		logger.info("Client :insertOtpCache - START with raw request:"+ trxId);
+		logger.info("Client :getOtpCache - START with raw request: {}", trxId);
 		
 		CheckOtpCacheResponse response = new CheckOtpCacheResponse();
 		Mono<CheckOtpCacheResponse> iResp = null;
 		
-		String uri = UriComponentsBuilder.fromHttpUrl(iwdbUri + "/otp/get").toUriString();
+		String uri = UriComponentsBuilder.fromHttpUrl(cachUri + "/otp/get").toUriString();
 		
 		try {
 			iResp = webClient.post()
@@ -74,17 +74,17 @@ public class CachOtpClient {
 					.retrieve()
 					.bodyToMono(CheckOtpCacheResponse.class);
 			
-			logger.info("Client :insertOtpCache - END with response:"+ iResp);
+			logger.info("Client :getOtpCache - END with response: {}", iResp);
 		}
 		catch(Exception e) {
-			
+			logger.error("Client :getOtpCache - EXCEPTION with :",  e);
 			response.setMsg(e.getMessage());
 			response.setIsPresent(false);
 			return response;
 		}
 		response = iResp.block();
 		
-		logger.info("Client :insertOtpCache - raw response:"+ response);
+		logger.info("Client :getOtpCache - raw response: {}", response);
 		return response;
 	}
 	

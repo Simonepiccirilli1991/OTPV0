@@ -2,6 +2,7 @@ package com.otpv0.fragment.cach0;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.otpv0.model.PushDto;
 import com.otpv0.service.model.response.BaseCacheResponse;
@@ -33,7 +34,7 @@ public class PushCacheService {
 		try {
 			iResp = push.getPushCache(bt);
 			// ritorno dto del cazzo a nullo , gestico nel service principale e faccio lanciare eccezzione a orchestratore
-			if(iResp.getNoFound())
+			if(!ObjectUtils.isEmpty(iResp.getNoFound()) && iResp.getNoFound())
 				return response;
 			
 			response = respToDto(iResp);

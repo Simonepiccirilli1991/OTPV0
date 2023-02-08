@@ -26,7 +26,7 @@ public class AceptPushService {
 	
 	public PushResponse acceptPush(PushRequest request) {
 		
-		logger.info("API :acceptPush - START with raw request:"+ request);
+		logger.info("API :acceptPush - START with raw request: {}", request);
 		
 		PushResponse response = new PushResponse();
 		//chiamo la getpush in cache
@@ -35,7 +35,7 @@ public class AceptPushService {
 		if(ObjectUtils.isEmpty(pushDto)) {
 			response.setNoFound(true);
 			response.setMsg("Error on retrive status push");
-			logger.info("API :acceptPush - END with response:"+ response.toString());
+			logger.info("API :acceptPush - END with response: {}", response);
 			return response;
 		}
 		// se status e pending e push e ancora valida
@@ -44,7 +44,7 @@ public class AceptPushService {
 			pushDto.setStatus(ActConstants.PushStatus.ACEPTED);
 			push.updatePushStatus(pushDto);
 			response.setAcepted(true);
-			logger.info("API :acceptPush - END with response:"+ response.toString());
+			logger.info("API :acceptPush - END with response: {}", response);
 			return response;
 			
 		}
@@ -52,7 +52,7 @@ public class AceptPushService {
 			pushDto.setStatus(ActConstants.PushStatus.REJECTED);
 			push.updatePushStatus(pushDto);
 			response.setAcepted(false);
-			logger.info("API :acceptPush - END with response:"+ response.toString());
+			logger.info("API :acceptPush - END with response: {}", response);
 			return response;
 		}
 	}

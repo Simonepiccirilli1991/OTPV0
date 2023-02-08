@@ -17,6 +17,10 @@ public class PushRequest {
 	public void setBancaId(String bancaId) {
 		this.bancaId = bancaId;
 	}
+	@Override
+	public String toString() {
+		return "PushRequest [bt=" + bt + ", bancaId=" + bancaId + "]";
+	}
 	
 	
 }
